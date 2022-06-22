@@ -5,20 +5,23 @@ from kubernetes import client, config
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello():
-    return "Hello World!!!"
-
 config.load_kube_config(
     os.path.join(os.environ["HOME"], '/opt/app/config'))
 
 v1 = client.CoreV1Api()
 
 pod_list = v1.list_namespaced_pod("default")
+
+
+
+@app.route("/")
+def hello():
+    return "Hello World!!!"
 for pod in pod_list.items:
-    return("%s\t%s\t%s" % (pod.metadata.name, 
+    print("%s\t%s\t%s" % (pod.metadata.name, 
                           pod.status.phase,
                           pod.status.pod_ip))
+
 
     
 if __name__ == "__main__":
