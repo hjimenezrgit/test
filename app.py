@@ -13,7 +13,12 @@ class KubernetesService:
         super().__init__()
         load_config()
 
-api_response = api_instance.list_namespaced_pod(namespace, pretty=pretty, timeout_seconds=timeout_seconds, watch=watch)
+v1 = client.CoreV1Api()
+
+pod_logs = v1.read_namespaced_pod_log(name='devops-arkon', namespace='default')
+print(pod_logs)
+
+
 
 for i in api_response.items:
     print(i.metadata.name + " " + i.status.phase)
