@@ -20,8 +20,6 @@ for pod in pod_list.items:
                           pod.status.phase,
                           pod.status.pod_ip))
 
-for i in api_response.items:
-    print(i.metadata.name + " " + i.status.phase)
     
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
