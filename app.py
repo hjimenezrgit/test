@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from kubernetes.client.rest import ApiException
 from kubernetes import client, config
