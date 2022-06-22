@@ -10,7 +10,7 @@ def hello():
     return "Hello World!!!"
 
 config.load_kube_config(
-    os.path.join(os.environ["HOME"], 'config'))
+    os.path.join(os.environ["HOME"], '/opt/app/config'))
 
 v1 = client.CoreV1Api()
 
