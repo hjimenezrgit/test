@@ -13,13 +13,10 @@ class KubernetesService:
         super().__init__()
         load_config()
 
-pod_name = "devops-arkon"
-try:
-    api_instance = client.CoreV1Api()
-    api_response = api_instance.read_namespaced_pod_log(name=pod_name, namespace='default')
-    print(api_response)
-except ApiException as e:
-    print('Found exception in reading the logs')
+api_response = api_instance.list_namespaced_pod(namespace, pretty=pretty, timeout_seconds=timeout_seconds, watch=watch)
+
+for i in api_response.items:
+    print(i.metadata.name + " " + i.status.phase)
     
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
