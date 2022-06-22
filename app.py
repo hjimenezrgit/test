@@ -8,17 +8,16 @@ app = Flask(__name__)
 def hello():
     return "Hello World!!!"
 
-class KubernetesService:
-    def __init__(self):
-        super().__init__()
-        load_config()
+config.load_kube_config(
+    os.path.join(os.environ["HOME"], 'config'))
 
 v1 = client.CoreV1Api()
 
-pod_logs = v1.read_namespaced_pod_log(name='devops-arkon', namespace='default')
-print(pod_logs)
-
-
+pod_list = v1.list_namespaced_pod("default")
+for pod in pod_list.items:
+    print("%s\t%s\t%s" % (pod.metadata.name, 
+                          pod.status.phase,
+                          pod.status.pod_ip))
 
 for i in api_response.items:
     print(i.metadata.name + " " + i.status.phase)
