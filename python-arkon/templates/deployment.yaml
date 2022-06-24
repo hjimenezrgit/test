@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: devops-arkon
+  name: {{.Values.application.name}}
+spec:
+  replicas: {{.Values.replicaCount}}
+  selector:
+    matchLabels:
+      app: devops-arkon
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: devops-arkon
+    spec:
+      volumes:
+        - name: nfs-vol
+          nfs:
+            server: 10.1.0.147
+            path: /exports/nfs
+      containers:
+      - image: {{.Values.image.repository}}
+        name: devops-arkon
+        imagePullPolicy: {{.Values.image.pullPolicy}}
+        resources: {}
+        ports:
+          - containerPort: 5000
+        volumeMounts:
+          - name: nfs-vol
+            mountPath: /opt/nfs
+status: {}
