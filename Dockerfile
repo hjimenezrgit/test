@@ -4,6 +4,8 @@ WORKDIR /opt/app
 
 COPY . .
 
+RUN apt update && apt install -y nfs-common
+
 RUN pip install --no-cache-dir -r requirement.txt
 
 RUN mkdir -p /opt/nfs
